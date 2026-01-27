@@ -815,32 +815,3 @@ display: flex;
     }
 }
 
-@media (max-width: 768px) {
-    .nav-links {
-        position: fixed;
-        right: -100%; /* Hidden off-screen to the right */
-        top: 70px;
-        flex-direction: column;
-        background-color: var(--merigi-blue);
-        width: 100%;
-        height: 100vh;
-        text-align: center;
-        transition: 0.3s ease-in-out;
-        z-index: 999;
-        padding-top: 50px;
-    }
-
-    /* This class is added by your JS when clicking the hamburger */
-    .nav-links.mobile-active {
-        right: 0;
-    }
-
-    .nav-links li {
-        margin: 20px 0;
-    }
-
-    .nav-links a {
-        color: white;
-        font-size: 1.5rem;
-    }
-}
