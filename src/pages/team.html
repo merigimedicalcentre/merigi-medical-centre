@@ -9,12 +9,12 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar container">
             <div class="logo">
                 <img src="../../public/images/logo.png" alt="Merigi Medical Centre Logo">
                 <div class="logo-text">
                     <h1>Merigi Medical Centre</h1>
-                    <span class="slogan">Ray of hope</span>
+                    <span class="slogan">rays of hope</span>
                 </div>
             </div>
             <div class="hamburger" id="hamburger">
@@ -26,6 +26,7 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="team.html" class="active">Our Team</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li class="mobile-only"><a href="contact.html" class="btn-nav-appointment">Book Appointment</a></li>
             </ul>
         </nav>
     </header>
@@ -42,7 +43,7 @@
             <div class="team-grid">
                 <div class="team-card">
                     <div class="member-image">
-                        <img src="../../public/images/doctor-placeholder.jpg" alt="Clinical Officer">
+                        <img src="../../public/images/doctor-placeholder.jpg" alt="Merigi Clinical Team">
                     </div>
                     <div class="member-info">
                         <h3>Clinical Team</h3>
@@ -53,7 +54,7 @@
 
                 <div class="team-card">
                     <div class="member-image">
-                        <img src="../../public/images/nurse-placeholder.jpg" alt="Nursing Staff">
+                        <img src="../../public/images/nurse-placeholder.jpg" alt="Merigi Nursing Department">
                     </div>
                     <div class="member-info">
                         <h3>Nursing Department</h3>
@@ -64,7 +65,7 @@
 
                 <div class="team-card">
                     <div class="member-image">
-                        <img src="../../public/images/lab-placeholder.jpg" alt="Lab Technician">
+                        <img src="../../public/images/lab-placeholder.jpg" alt="Merigi Diagnostic Team">
                     </div>
                     <div class="member-info">
                         <h3>Diagnostic Team</h3>
@@ -74,37 +75,42 @@
                 </div>
             </div>
         </section>
-		<section class="join-team-banner">
-    <div class="container">
-        <div class="join-content">
-            <div class="join-text">
-                <h2>Join Our Medical Team</h2>
-                <p>Are you a dedicated healthcare professional looking to make a difference in Bomet? We are always looking for compassionate Clinical Officers, Nurses, Lab Technologists, and Support Staff to join our growing family.</p>
-                
-                <ul class="benefit-list">
-                    <li>✨ Collaborative work environment</li>
-                    <li>✨ 24/7 facility with flexible shifts</li>
-                    <li>✨ Opportunity to serve the Merigi community</li>
-                </ul>
 
-                <div class="cta-wrapper">
-                    <a href="mailto:careers@merigimedical.com" class="btn-primary">Send Your CV</a>
-                    <a href="contact.html" class="btn-outline">Inquire About Openings</a>
+        <section class="join-team-banner">
+            <div class="container">
+                <div class="join-content">
+                    <div class="join-text">
+                        <h2>Join Our Medical Team</h2>
+                        <p>Are you a dedicated healthcare professional looking to make a difference in Bomet? We are always looking for compassionate professionals to join our growing family.</p>
+                        
+                        <ul class="benefit-list">
+                            <li>✨ Collaborative work environment</li>
+                            <li>✨ 24/7 facility with flexible shifts</li>
+                            <li>✨ Opportunity to serve the Merigi community</li>
+                        </ul>
+
+                        <div class="cta-wrapper">
+                            <a href="mailto:careers@merigimedical.com" class="btn-primary">Send Your CV</a>
+                            <a href="contact.html" class="btn-outline">Inquire About Openings</a>
+                        </div>
+                    </div>
+                    <div class="join-icon">
+                        <div class="stethoscope-circle">🩺</div>
+                    </div>
                 </div>
             </div>
-            <div class="join-icon">
-                <div class="stethoscope-circle">🩺</div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
     </main>
 
     <footer class="main-footer">
-        <div class="footer-bottom">
-            <p>© <span id="current-year"></span> Merigi Medical Centre. Ray of hope.</p>
+        <div class="footer-bottom container">
+            <p>© <span id="current-year"></span> Merigi Medical Centre. rays of hope.</p>
         </div>
     </footer>
+
+   <button id="backToTop" class="back-to-top" title="Go to top">
+        <span class="arrow">↑</span>
+    </button>
 
     <script src="../assets/js/main.js"></script>
 </body>
