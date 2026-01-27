@@ -1,30 +1,16 @@
 /**
- * Merigi Medical Centre - Main JavaScript
- * Handles: Mobile Menu, Contact Form, and Service Modals
+ * Merigi Medical Centre - Core Website Logic
+ * Handles: Navigation, Modals, Forms, and Animations
  */
 
-// --- 1. Navigation & Hamburger Logic ---
+// --- 1. Global Selectors & Configuration ---
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('nav-links');
+const serviceModal = document.getElementById('serviceModal');
+const modalBody = document.getElementById('modalBody');
+const backToTopBtn = document.getElementById('backToTop');
+const currentYearSpan = document.getElementById('current-year');
 
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('mobile-active');
-        hamburger.classList.toggle('toggle');
-    });
-}
-
-// Close mobile menu when a link is clicked
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        if (navLinks.classList.contains('mobile-active')) {
-            navLinks.classList.remove('mobile-active');
-            hamburger.classList.remove('toggle');
-        }
-    });
-});
-
-// --- 2. Service Modal Data & Logic ---
 const serviceData = {
     outpatient: {
         title: "Outpatient Services",
@@ -39,144 +25,125 @@ const serviceData = {
     maternity: {
         title: "24/7 Maternity Care",
         icon: "👶",
-        text: "We specialize in safe motherhood. Our services include Antenatal Care (ANC), skilled delivery, emergency C-sections if needed, and dedicated postnatal wards for you and your baby."
+        text: "We specialize in safe motherhood. Our services include Antenatal Care (ANC), skilled delivery, emergency C-sections, and dedicated postnatal wards."
     },
     lab: {
         title: "Laboratory & Diagnostics",
         icon: "🧪",
-        text: "Our lab is NEMA and KMLTTB compliant, providing accurate tests in Hematology, Biochemistry, and Parasitology to ensure correct diagnosis before treatment starts."
+        text: "Our lab is NEMA and KMLTTB compliant, providing accurate tests in Hematology, Biochemistry, and Parasitology to ensure correct diagnosis."
     },
     pharmacy: {
         title: "Qualified Pharmacy",
         icon: "💊",
-        text: "We stock genuine and affordable medications. Our pharmacists are always available to explain dosage and provide counseling on your prescriptions."
+        text: "We stock genuine and affordable medications. Our pharmacists provide expert counseling on your prescriptions."
     },
     imaging: {
         title: "Diagnostic Imaging Department",
         icon: "🩻",
         text: `
-            <p>Our imaging department uses modern technology to provide clear insights for accurate medical decisions.</p>
-            <div class="modal-list">
-                <div class="list-item" style="background: #f7fafc; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--merigi-teal);">
-                    <strong>📟 Ultrasound (Sonography):</strong> 
-                    Used for obstetric scans (pregnancy), abdominal, and pelvic examinations.
+            <p>Our imaging department uses modern technology for accurate medical decisions:</p>
+            <div class="modal-list" style="margin-top: 15px;">
+                <div style="background: #f7fafc; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--merigi-teal);">
+                    <strong>📟 Ultrasound:</strong> Obstetric, abdominal, and pelvic examinations.
                 </div>
-                <div class="list-item" style="background: #f7fafc; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--merigi-teal);">
-                    <strong>🦴 Digital X-Ray:</strong> 
-                    High-resolution imaging for fractures, chest infections, and orthopedic assessments.
-                </div>
-                <div class="list-item" style="background: #f7fafc; padding: 10px; border-radius: 8px; border-left: 4px solid var(--merigi-teal);">
-                    <strong>📋 Specialized Scans:</strong> 
-                    Targeted imaging for soft tissue injuries and internal organ health.
+                <div style="background: #f7fafc; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--merigi-teal);">
+                    <strong>🦴 Digital X-Ray:</strong> High-resolution imaging for fractures and chest assessments.
                 </div>
             </div>`
     }
 };
 
-function openModal(serviceKey) {
-    const modal = document.getElementById('serviceModal');
-    const body = document.getElementById('modalBody');
+// --- 2. Navigation & Mobile Menu ---
+const toggleMenu = () => {
+    navLinks.classList.toggle('mobile-active');
+    hamburger.classList.toggle('toggle');
+};
+
+if (hamburger) {
+    hamburger.addEventListener('click', toggleMenu);
+}
+
+// Close menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (navLinks.classList.contains('mobile-active')) toggleMenu();
+    });
+});
+
+// --- 3. Modal Logic ---
+window.openModal = function(serviceKey) {
     const data = serviceData[serviceKey];
+    if (!data || !serviceModal) return;
 
-    if (!data) return;
-
-    body.innerHTML = `
+    modalBody.innerHTML = `
         <div style="font-size: 3.5rem; text-align:center; margin-bottom:10px;">${data.icon}</div>
         <h2 style="color: #003b5c; text-align:center; margin-bottom:15px;">${data.title}</h2>
         <div style="color: #4a5568; line-height: 1.6; font-size: 1.1rem;">${data.text}</div>
-        <button onclick="closeModal()" class="btn-primary" style="margin-top:20px; width:100%;">Close Details</button>
+        <button onclick="closeModal()" class="btn-primary" style="margin-top:25px; width:100%;">Close Details</button>
     `;
     
-    modal.style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Lock scroll
-}
+    serviceModal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+};
 
-function closeModal() {
-    const modal = document.getElementById('serviceModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore scroll
+window.closeModal = function() {
+    if (serviceModal) {
+        serviceModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
-}
+};
 
-// Close modal when clicking outside the content box
-window.addEventListener('click', (event) => {
-    const modal = document.getElementById('serviceModal');
-    if (event.target == modal) {
-        closeModal();
-    }
-});
+// Close modal on outside click or Escape key
+window.addEventListener('click', (e) => { if (e.target === serviceModal) closeModal(); });
+window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-// --- 3. Contact Form Logic ---
+// --- 4. Contact Form Simulation ---
 const contactForm = document.getElementById('contactForm');
-
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        const name = document.getElementById('name').value;
         const submitBtn = this.querySelector('.btn-submit');
+        const originalText = submitBtn.innerText;
         
-        // Visual feedback
         submitBtn.innerText = "Sending...";
-        submitBtn.style.opacity = "0.7";
         submitBtn.disabled = true;
 
-        // Simulate server delay
         setTimeout(() => {
-            alert(`Thank you, ${name}! Your message has been sent. We will contact you soon.`);
+            alert(`Thank you! Your inquiry has been sent to Merigi Medical Centre.`);
             contactForm.reset();
-            submitBtn.innerText = "Send Message";
-            submitBtn.style.opacity = "1";
+            submitBtn.innerText = originalText;
             submitBtn.disabled = false;
         }, 1500);
     });
 }
 
-// --- 4. Automatic Year Update ---
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-}
-
-// --- 5. Back to Top Button Logic ---
-const backToTopBtn = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-    // Show button after scrolling down 400px
-    if (window.pageYOffset > 400) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-});
-
+// --- 5. Scroll Effects (Back to Top & Reveal) ---
 if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+        backToTopBtn.classList.toggle('show', window.scrollY > 400);
+    });
+
     backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Creates the nice gliding effect
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
 
-// --- 6. Scroll Reveal Effect ---
-const observerOptions = {
-    threshold: 0.1
-};
+// Automatic Year
+if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
 
-const observer = new IntersectionObserver((entries) => {
+// Intersection Observer for animations
+const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = "1";
             entry.target.style.transform = "translateY(0)";
         }
     });
-}, observerOptions);
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.feature-card, .timeline-item').forEach(el => {
+document.querySelectorAll('.feature-card, .timeline-item, .blog-card').forEach(el => {
     el.style.opacity = "0";
-    el.style.transform = "translateY(20px)";
-    el.style.transition = "all 0.6s ease-out";
-    observer.observe(el);
+    el.style.transform = "translateY(30px)";
+    el.style.transition = "all 0.8s ease-out";
+    scrollObserver.observe(el);
 });
